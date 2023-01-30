@@ -1,19 +1,26 @@
 import { useEffect, useState } from "react";
 import Tours from "./Tours";
 
-const url = 'https://course-api.com/react-tours-project'
+const url = 'https://course-api.com/react-tours-project';
 
 function App() {
   const [tours, setTours] = useState([]);
   const [loading, setLoading] = useState(false);
 
+
+  const removeTours = (id) => {
+    const newTours = tours.filter((item) =>item.id !== id )
+    setTours(newTours)
+  }
+
+
   const fetchTours = async () => {
     setLoading(true)
     try {
       const response = await fetch(url);
-      const tours = await response.json();
+      const data = await response.json();
       setLoading(false);
-      setTours(tours)
+      setTours(data)
     } catch (error) {
       console.log(error);
       setLoading(false)
@@ -23,6 +30,7 @@ function App() {
   useEffect(() => {
     fetchTours()
   }, []);
+
 
 
   return (
@@ -37,15 +45,15 @@ function App() {
         tours.length === 0 ? (
           <main>
             <div className='title'>
-              <h2>no tours left</h2>
+              <h2>No Tours Left</h2>
               <button className='btn' onClick={() => fetchTours()}>
-                refresh
+                Refresh
               </button>
             </div>
           </main>
         ) : (
           <main>
-            <Tours />
+            <Tours tours={tours} removeTours={removeTours} />
           </main>
         )
       )}
