@@ -170,6 +170,15 @@ main {
 .review:hover {
   box-shadow: var(--dark-shadow);
 }
+.review button {
+  background: transparent;
+  border-color: transparent;
+  text-transform: capitalize;
+  color: var(--clr-primary-5);
+  font-size: 1rem;
+  cursor: pointer;
+  padding-left: 0.25rem;
+}
 .img-container {
   position: relative;
   width: 150px;
