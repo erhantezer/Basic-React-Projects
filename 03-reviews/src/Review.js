@@ -1,6 +1,10 @@
-import React from 'react'
+import { useState } from "react"
+import reviews from "./data"
 
 const Review = () => {
+const [index, setIndex] = useState(0);
+const {id, name, job, image} = reviews[index];
+
 
   return (
     <article className='review'>
