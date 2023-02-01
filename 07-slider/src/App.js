@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import data from "./data";
 import { FaQuoteRight } from 'react-icons/fa';
+import { FiChevronRight, FiChevronLeft } from 'react-icons/fi';
 
 
 function App() {
@@ -37,8 +38,19 @@ function App() {
       <div className="section-center">
         {people.map((person, perIndex) => {
           const { id, image, name, title, quote } = person;
+
+          let position = "nextSlide";
+          if(perIndex === index) {
+            position = "activeSlide"
+          }
+          if(perIndex === index - 1 || (index === 0 && perIndex === people.length - 1)){
+            position = "lastSlide"
+          }
+
           return (
-            <article className="activeSlide" key={id} >
+            <article 
+            className={position} 
+            key={id} >
               <img src={image} alt={name} className="person-img" />
               <h4>{name}</h4>
               <p className="title">{title}</p>
@@ -47,6 +59,12 @@ function App() {
             </article>
           )
         })}
+        <button className="prev" onClick={() => setIndex(index - 1)}>
+          <FiChevronLeft />
+        </button>
+        <button className="next" onClick={() => setIndex(index + 1)}>
+          <FiChevronRight />
+        </button>
       </div>
     </section>
   );
