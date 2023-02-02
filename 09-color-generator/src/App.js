@@ -1,15 +1,30 @@
-import { useState } from "react";
-
+import React, { useState } from "react";
+import SingleColor from './SingleColor'
+import Values from 'values.js'
 
 function App() {
 const [color, setColor] = useState("");
-const [error, setError] = useState(false)
+const [error, setError] = useState(false);
+const [list, setList] = useState(new Values("#f15025").all(10));
+
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
+    try {
+      let colors = new Values(color).all(10)
+      console.log(colors);
+      setList(colors)
+      setColor("")
+    } catch (error) {
+      setError(true)
+      console.log(error)
+    }
   }
+
+console.log(color)
+
   return (
+    <React.Fragment>
     <section className="container">
       <h3>color generator</h3>
       <form onSubmit={handleSubmit}>
@@ -24,6 +39,19 @@ const [error, setError] = useState(false)
         </button>
       </form>
     </section>
+    <section className="colors">
+      {list.map((color, index) => {
+        return (
+          <SingleColor
+          key={index}
+          {...color}
+          index={index}
+          hexColor={color.hex}
+          />
+        )
+      })}
+    </section>
+    </React.Fragment>
   );
 }
 
