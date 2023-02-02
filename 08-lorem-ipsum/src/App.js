@@ -18,9 +18,7 @@ function App() {
     setText(data.slice(0, amount))
   }
 
-  const erhan = ["we", "kl", "şş", "dd", "ff"]
-  console.log(erhan.slice(0,2))
-  console.log(erhan.slice(0,3));
+
 
   return (
     <section className="section-center">
