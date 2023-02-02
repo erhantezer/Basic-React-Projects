@@ -12,16 +12,15 @@ const [list, setList] = useState(new Values("#f15025").all(10));
     e.preventDefault()
     try {
       let colors = new Values(color).all(10)
-      console.log(colors);
       setList(colors)
       setColor("")
+      
     } catch (error) {
       setError(true)
       console.log(error)
     }
   }
 
-console.log(color)
 
   return (
     <React.Fragment>
