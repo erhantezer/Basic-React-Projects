@@ -1,15 +1,31 @@
 import { useEffect, useState } from "react";
 import Alert from "./Alert";
+import List from "./List";
 
 
 function App() {
   const [name, setName] = useState("");
   const [list, setList] = useState(JSON.parse(localStorage.getItem('list')));
-  const [alert, setAlert] = useState({ show: false, msg: "", type: "" });
+  const [alert, setAlert] = useState({ show: false, type: "", msg: "" });
 
   const handleSubmit = (e) => {
-    e.preventDefault()
+    e.preventDefault();
+    if(!name) {
+      showAlert(true, "danger", "please enter value")
+    }
+    setList(name)
   }
+
+
+  const showAlert = (show = false, type = '', msg = '') => {
+    setAlert({show, type, msg})
+  }
+
+
+  const clearList = () => {
+    showAlert(true, 'danger', 'empty list');
+    setList([]);
+  };
 
   useEffect(() => {
     localStorage.setItem("list", JSON.stringify(list))
@@ -33,6 +49,12 @@ function App() {
           </button>
         </div>
       </form>
+      <div className='grocery-container'>
+          <List items={list}  />
+          <button className='clear-btn' onClick={clearList} >
+            clear items
+          </button>
+        </div>
     </section>
   );
 }
