@@ -32,6 +32,13 @@ function App() {
     setList([]);
   };
 
+
+  const removeItem = (id) => {
+    showAlert(true, "danger", "item removed");
+    setList(list.filter((item) => item.id !== id));
+  }
+
+
   useEffect(() => {
     localStorage.setItem("list", JSON.stringify(list))
   }, [list])
