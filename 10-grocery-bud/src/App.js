@@ -1,13 +1,17 @@
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 
 function App() {
   const [name, setName] = useState("");
+  const [list, setList] = useState(JSON.parse(localStorage.getItem('list')));
 
 const handleSubmit = (e) => {
   e.preventDefault()
 }
 
+useEffect(() => {
+  localStorage.setItem("list", JSON.stringify(list))
+},[list])
 
   return (
     <section className="section-center">
