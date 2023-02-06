@@ -2,7 +2,14 @@ import React from 'react'
 
 const Submenu = () => {
   return (
-    <div>Submenu</div>
+    <aside className='submenu show'>
+      <section>
+        <h4>{}</h4>
+        <div className=''>
+
+        </div>
+      </section>
+    </aside>
   )
 }
 
