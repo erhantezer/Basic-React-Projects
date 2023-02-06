@@ -11,7 +11,8 @@ const displaySubmenu = (e) => {
   const tempBtn = e.target.getBoundingClientRect();
   const center = (tempBtn.left + tempBtn.right) / 2;
   const bottom = tempBtn.bottom - 3;
-  console.log(tempBtn)
+  openSubmenu(page, { center, bottom });
+  
 }
 
 
@@ -27,7 +28,7 @@ const handleSubmenu = (e) => {
       <div className='nav-center'>
         <div className='nav-header'>
           <img src={logo} alt="logo" className='nav-logo' />
-          <button className='btn toggle-btn'>
+          <button className='btn toggle-btn' onClick={openSidebar}>
             <FaBars />
           </button>
         </div>
@@ -38,12 +39,12 @@ const handleSubmenu = (e) => {
             </button>
           </li>
           <li>
-            <button className="link-btn">
+            <button className="link-btn" onMouseOver={displaySubmenu}>
               developers
             </button>
           </li>
           <li>
-            <button className="link-btn">
+            <button className="link-btn" onMouseOver={displaySubmenu}>
               company
             </button>
           </li>
