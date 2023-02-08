@@ -1,10 +1,14 @@
+import CartContainer from "./CartContainer";
+import Navbar from "./Navbar";
 
 
 function App() {
+  
   return (
-    <div >
-
-    </div>
+    <main>
+      <Navbar/>
+      <CartContainer/>
+    </main>
   );
 }
 
