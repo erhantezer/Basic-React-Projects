@@ -1,5 +1,5 @@
-import { createContext, useContext, useReducer } from "react";
-import {cartItems} from './data'
+import { createContext, useContext, useEffect, useReducer } from "react";
+import { cartItems } from './data'
 import { reducer } from "./reducer";
 
 const url = 'https://course-api.com/react-useReducer-cart-project'
@@ -11,7 +11,6 @@ export const useGlobalContext = () => {
 }
 
 
-
 const initialState = {
     loading: false,
     cart: cartItems,
@@ -19,21 +18,49 @@ const initialState = {
     amount: 0,
 }
 
-const AppProvider = ({children}) => {
+const AppProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState)
 
-const fetchData = async () => {
-    dispatch({type: "LOADİNG"})
-    const response = await fetch(url);
-    const cart = await response.json();
-    dispatch({type: "DISPLAY_ITEMS", payload: cart})
-}
+    const fetchData = async () => {
+        dispatch({ type: "LOADİNG" })
+        const response = await fetch(url);
+        const cart = await response.json();
+        dispatch({ type: "DISPLAY_ITEMS", payload: cart })
+    };
+
+    useEffect(() => {
+        fetchData()
+    }, []);
+
+    useEffect(() => {
+        dispatch({ type: 'GET_TOTALS' })
+    }, [state.cart])
+
+    const clearCart = () => {
+        dispatch({ type: "CLEAR_CART" })
+    };
+
+    const remove = (id) => {
+        dispatch({ type: 'REMOVE', payload: id })
+    };
+
+    const increase = (id) => {
+        dispatch({ type: 'INCREASE', payload: id })
+    };
+
+    const decrease = (id) => {
+        dispatch({ type: 'DECREASE', payload: id })
+    };
+
+    const toggleAmount = (id, type) => {
+        dispatch({ type: 'TOGGLE_AMOUNT', payload: { id, type } })
+    }
 
     return (
-        <AppContext.Provider value={{...state, fetchData}}>
+        <AppContext.Provider value={{ ...state, fetchData, clearCart, remove, increase, decrease, toggleAmount }}>
             {children}
         </AppContext.Provider>
-        )
+    )
 }
 
 export default AppProvider;
