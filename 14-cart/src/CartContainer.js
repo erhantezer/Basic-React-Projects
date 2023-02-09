@@ -7,8 +7,6 @@ const {cart, total, clearCart} = useGlobalContext()
 
 
 
-
-
   return (
     <>
     {cart.length === 0 ? (
