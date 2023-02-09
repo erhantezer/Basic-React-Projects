@@ -31,14 +31,14 @@ const AppProvider = ({ children }) => {
     }
 
 
-    const increase = (id) => {
-        dispatch({ type: 'INCREASE', payload: id })
-    }
+    // const increase = (id) => {
+    //     dispatch({ type: 'INCREASE', payload: id })
+    // }
 
 
-    const decrease = (id) => {
-        dispatch({ type: 'DECREASE', payload: id })
-    }
+    // const decrease = (id) => {
+    //     dispatch({ type: 'DECREASE', payload: id })
+    // }
 
 
     const fetchData = async () => {
@@ -64,7 +64,14 @@ const AppProvider = ({ children }) => {
     }, [state.cart])
 
     return (
-        <AppContext.Provider value={{ ...state, clearCart, remove, increase, decrease, toggleAmount }}>
+        <AppContext.Provider value={{ 
+        ...state, 
+        clearCart, 
+        remove, 
+        // increase, 
+        // decrease, 
+        toggleAmount 
+        }}>
             {children}
         </AppContext.Provider>
     )
