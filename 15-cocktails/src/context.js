@@ -23,13 +23,15 @@ export const AppProvider = ({ children }) => {
             const { drinks } = data;
             if (drinks) {
                 const newCocktails = drinks.map((item) => {
-                    const { idDrink, strDrink, strDrinkThumb, strAlcoholic, strGlass } = item;
+                    const { idDrink, strDrink, strDrinkThumb, strAlcoholic, strGlass, strInstructions,strCategory } = item;
                     return {
                         id: idDrink,
                         name: strDrink,
                         image: strDrinkThumb,
                         info: strAlcoholic,
                         glass: strGlass,
+                        instructions:strInstructions,
+                        category:strCategory,
                     }
                 })
                 setCocktails(newCocktails)

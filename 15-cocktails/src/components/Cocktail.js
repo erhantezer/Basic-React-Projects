@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 
-const Cocktail = ({ image, name, id, info, glass }) => {
+const Cocktail = ({ item }) => {
+    const { image, name, id, info, glass,} = item
+
     return (
         <article className='cocktail'>
             <div className='img-container'>
@@ -10,8 +12,8 @@ const Cocktail = ({ image, name, id, info, glass }) => {
                 <h3>{name}</h3>
                 <h4>{glass}</h4>
                 <p>{info}</p>
-                <Link to={`/cocktail/${id}`} className='btn btn-primary btn-details'>
-                details
+                <Link to={`/cocktail/${id}`} state={{ ...item }} className='btn btn-primary btn-details'>
+                    details
                 </Link>
             </div>
         </article>
