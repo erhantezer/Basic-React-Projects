@@ -1,4 +1,4 @@
-import {createContext, useContext, useState} from "react"
+import {createContext, useContext, useEffect, useState} from "react"
 
 const AppContext = createContext();
 
@@ -13,6 +13,7 @@ const [loading, setLoading] = useState(false);
 const [searchTerm, setSearchTerm] = useState("a")
 const [cocktails, setCocktails] = useState([])
 
+
 const fetchApı =  async () => {
     try {
         const res = await fetch(`${url}${searchTerm}`);
@@ -22,6 +23,10 @@ const fetchApı =  async () => {
         
     }
 }
+
+useEffect(() => {
+    fetchApı()
+}, [searchTerm]);
 
     return (
         <AppContext.Provider value={{}}>
