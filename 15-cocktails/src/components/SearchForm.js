@@ -5,13 +5,16 @@ const SearchForm = () => {
     const { setSearchTerm } = useGlobalContext()
     const searchValue = useRef('')
 
+    useEffect(() => {
+        searchValue.current.focus();
+    },[])
+
+
     const handleSubmit = (e) => {
         e.preventDefault();
     }
 
-    useEffect(() => {
-        searchValue.current.focus();
-    })
+
 
     return (
         <section className='section search'>
@@ -22,6 +25,7 @@ const SearchForm = () => {
                         type="text"
                         name="name"
                         id='name'
+                        ref={searchValue}
                         onChange={(e) => setSearchTerm(searchValue.current.value)}
                     />
                 </div>
