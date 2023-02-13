@@ -6,6 +6,7 @@ function App() {
   const { loading, data } = useFetch()
   const [page, setPage] = useState(0)
   const [followers, setFollowers] = useState([])
+  console.log(followers)
 
   useEffect(() => {
     if (loading) return
@@ -42,11 +43,11 @@ function App() {
         <div className='underline'></div>
       </div>
       <section className='followers'>
-        {/* <div className='container'>
-          {followers.map((follower) => {
+        <div className='container'>
+          {followers?.map((follower) => {
             return <Follower key={follower.id} {...follower} />
           })}
-        </div> */}
+        </div>
         {!loading && (
           <div className='btn-container'>
             <button className='prev-btn' onClick={prevPage}>
