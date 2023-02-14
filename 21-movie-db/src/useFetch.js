@@ -1,22 +1,25 @@
 import { useEffect, useState } from "react";
 
-const API_KEY = "fcacb142"
-const API_ENDPOINT = `https://www.omdbapi.com/?apikey=${API_KEY}&s=`
+
 
 const useFetch = () => {
     const [loading, setLoading] = useState(false);
-    const [data, setData] = useState([]);
+    const [movies, setMovies] = useState([]);
     const [error, setError] = useState({ show: false, msg: '' })
     const [query, setQuery] = useState('batman')
 
-    const fetchData = async (url) => {
+    const API_KEY = "fcacb142"
+    const API_ENDPOINT = `https://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
+
+    const fetchData = async () => {
         setLoading(true)
 
         try {
-            const res = await fetch(url);
+            const res = await fetch(API_ENDPOINT);
             const data = await res.json()
+            
+            setMovies(data.Search);
             if (data.Response === true) {
-                setData(data.Search || data);
                 setError({ show: false, msg: '' });
             } else {
                 setError({ show: true, msg: data.Error })
@@ -29,11 +32,14 @@ const useFetch = () => {
         }
     }
 
-    useEffect(() => {
-        fetchData(`${API_ENDPOINT}${query}`)
-    }, []);
 
-    return { loading, data, error, setQuery }
+    useEffect(() => {
+        fetchData()
+    }, [query]);
+
+console.log(movies)
+
+    return { loading, movies, error, query, setQuery }
 
 }
 
