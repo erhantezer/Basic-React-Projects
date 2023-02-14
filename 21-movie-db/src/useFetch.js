@@ -1,46 +1,38 @@
-import { useEffect, useState } from "react";
+
+import { useState, useEffect } from 'react'
 
 
+const API_KEY = "fcacb142"
+const API_ENDPOINT = `https://www.omdbapi.com/?apikey=${API_KEY}`
 
-const useFetch = () => {
-    const [loading, setLoading] = useState(false);
-    const [movies, setMovies] = useState([]);
-    const [error, setError] = useState({ show: false, msg: '' })
-    const [query, setQuery] = useState('batman')
+const useFetch = (urlParams) => {
+  const [isLoading, setIsLoading] = useState(true)
+  const [error, setError] = useState({ show: false, msg: '' })
+  const [data, setData] = useState(null)
+  
+  const fetchMovies = async (url) => {
+    setIsLoading(true)
+    try {
+      const response = await fetch(url)
+      const data = await response.json()
 
-    const API_KEY = "fcacb142"
-    const API_ENDPOINT = `https://www.omdbapi.com/?apikey=${API_KEY}&s=${query}`
+      if (data.Response === 'True') {
+        setData(data.Search || data)
 
-    const fetchData = async () => {
-        setLoading(true)
-
-        try {
-            const res = await fetch(API_ENDPOINT);
-            const data = await res.json()
-            
-            setMovies(data.Search);
-            if (data.Response === true) {
-                setError({ show: false, msg: '' });
-            } else {
-                setError({ show: true, msg: data.Error })
-            }
-            setLoading(false)
-
-        } catch (error) {
-            console.log(error);
-            setLoading(false);
-        }
+        setError({ show: false, msg: '' })
+      } else {
+        setError({ show: true, msg: data.Error })
+      }
+      setIsLoading(false)
+    } catch (error) {
+      console.log(error)
     }
+  }
 
-
-    useEffect(() => {
-        fetchData()
-    }, [query]);
-
-console.log(movies)
-
-    return { loading, movies, error, query, setQuery }
-
+  useEffect(() => {
+    fetchMovies(`${API_ENDPOINT}${urlParams}`)
+  }, [urlParams])
+  return { isLoading, error, data }
 }
 
 export default useFetch
