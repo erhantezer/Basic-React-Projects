@@ -1,18 +1,28 @@
 import { useEffect, useState } from "react";
 
+const API_KEY = "fcacb142"
+const API_ENDPOINT = `https://www.omdbapi.com/?apikey=${API_KEY}&s=`
 
-const url = ""
 const useFetch = () => {
     const [loading, setLoading] = useState(false);
     const [data, setData] = useState([]);
+    const [error, setError] = useState({ show: false, msg: '' })
+    const [query, setQuery] = useState('batman')
 
-    const fetchData = async () => {
+    const fetchData = async (url) => {
         setLoading(true)
+
         try {
             const res = await fetch(url);
             const data = await res.json()
-            setData(data)
+            if (data.Response === true) {
+                setData(data.Search || data);
+                setError({ show: false, msg: '' });
+            } else {
+                setError({ show: true, msg: data.Error })
+            }
             setLoading(false)
+
         } catch (error) {
             console.log(error);
             setLoading(false);
@@ -20,10 +30,10 @@ const useFetch = () => {
     }
 
     useEffect(() => {
-        fetchData()
+        fetchData(`${API_ENDPOINT}${query}`)
     }, []);
 
-    return { loading, data }
+    return { loading, data, error, setQuery }
 
 }
 
