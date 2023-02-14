@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 
 const url = ""
@@ -18,6 +18,10 @@ const useFetch = () => {
             setLoading(false);
         }
     }
+
+    useEffect(() => {
+        fetchData()
+    }, []);
 
     return { loading, data }
 
