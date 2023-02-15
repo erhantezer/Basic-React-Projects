@@ -1,6 +1,6 @@
 import { createContext, useContext, useEffect, useReducer } from "react";
 import { reducer } from "./reducer";
-import { HANDLE_SEARCH, SET_LOADING, SET_STORIES } from "./actions";
+import { HANDLE_PAGE, HANDLE_SEARCH, SET_LOADING, SET_STORIES } from "./actions";
 
 
 const AppContext = createContext();
@@ -37,13 +37,16 @@ export const AppProvider = ({ children }) => {
     const handleSearch = (query) => {
         dispatch({type: HANDLE_SEARCH, payload: query})
     }
+    const handlePage = (value) => {
+        dispatch({type: HANDLE_PAGE, payload: value})
+    }
 
     useEffect(() => {
         fetchStories(`${API_ENDPOINT}query=${state.query}`)
     }, [state.query]);
 
     return (
-        <AppContext.Provider value={{...state, handleSearch}}>
+        <AppContext.Provider value={{...state, handleSearch, handlePage}}>
             {children}
         </AppContext.Provider>
     )
